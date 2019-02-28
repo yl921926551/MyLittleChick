@@ -1,0 +1,228 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+	<display-name>TodeepWeb</display-name>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath*:/applicationContext.xml</param-value>
+	</context-param>
+    <!-- 跨域　CROS协议 -->
+	<filter>
+		<filter-name>corsFilter</filter-name>
+        <filter-class>cn.ly.mlc.web.interceptor.CorsFilter</filter-class>
+        <init-param>
+            <!-- 跨域的域名在此配置:""(不允许跨域)  多个域名以,分隔　　*代表全部 -->
+            <param-name>accessControlAllowOrigin</param-name>
+        		<param-value>*</param-value>
+        </init-param>
+    </filter>
+
+  <!-- Character Encoding filter -->
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+		<init-param>
+			<param-name>forceEncoding</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	<!-- 
+	<filter>
+		<filter-name>topdeep-common-resource</filter-name>
+		<filter-class>common.web.res.ResourceFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>topdeep-common-resource</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	 -->
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>corsFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<listener>
+	    <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+   	</listener>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	
+	
+	<servlet>
+		<servlet-name>ZhstApiServlet1</servlet-name>
+		<display-name>ZhstApiServlet1</display-name>
+		<servlet-class>
+		    org.springframework.web.context.support.HttpRequestHandlerServlet
+		</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>ZhstApiServlet2</servlet-name>
+		<display-name>ZhstApiServlet2</display-name>
+		<servlet-class>
+		    org.springframework.web.context.support.HttpRequestHandlerServlet
+		</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>ZhstWebApiServlet1</servlet-name>
+		<display-name>ZhstWebApiServlet1</display-name>
+		<servlet-class>
+		    org.springframework.web.context.support.HttpRequestHandlerServlet
+		</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>ZhstWebApiServlet2</servlet-name>
+		<display-name>ZhstWebApiServlet2</display-name>
+		<servlet-class>
+		    org.springframework.web.context.support.HttpRequestHandlerServlet
+		</servlet-class>
+	</servlet>
+	<servlet>
+	    <servlet-name>zhstPhoneSimApi</servlet-name>
+		<display-name>zhstPhoneSimApi</display-name>
+		<servlet-class>
+		    org.springframework.web.context.support.HttpRequestHandlerServlet
+		</servlet-class>
+	</servlet>
+	
+	
+	<servlet>
+	    <servlet-name>manageServlet</servlet-name>
+		<display-name>manageServlet</display-name>
+		<servlet-class>
+		    org.springframework.web.context.support.HttpRequestHandlerServlet
+		</servlet-class>
+	</servlet>
+	
+	<servlet>
+	    <servlet-name>FileUploadServlet</servlet-name>
+		<display-name>FileUploadServlet</display-name>
+		<servlet-class>
+		    org.springframework.web.context.support.HttpRequestHandlerServlet
+		</servlet-class>
+	</servlet>
+	
+	<servlet>
+	    <servlet-name>FileUploadServlet2</servlet-name>
+		<display-name>FileUploadServlet2</display-name>
+		<servlet-class>
+		    org.springframework.web.context.support.HttpRequestHandlerServlet
+		</servlet-class>
+	</servlet>
+	
+	<servlet>
+	    <servlet-name>BCPApiServlet</servlet-name>
+		<display-name>BCPApiServlet</display-name>
+		<servlet-class>
+		    org.springframework.web.context.support.HttpRequestHandlerServlet
+		</servlet-class>
+	</servlet>
+	
+	
+	<servlet>
+	    <servlet-name>StaticSourcesDownloadServlet</servlet-name>
+		<display-name>StaticSourcesDownloadServlet</display-name>
+		<servlet-class>
+		    org.springframework.web.context.support.HttpRequestHandlerServlet
+		</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>PingppWebhooksServlet</servlet-name>
+		<display-name>PingppWebhooksServlet</display-name>
+		<description></description>
+		<servlet-class>cn.ly.mlc.web.servlet.PingppWebhooksServlet</servlet-class>
+	</servlet>
+	<!-- 
+	<servlet>
+		<servlet-name>web</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath*:/topdeep-web-servlet.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	 -->  
+	<servlet-mapping>
+	    <servlet-name>ZhstApiServlet1</servlet-name>
+	    <url-pattern>/ZhstApiServlet1.servlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+	    <servlet-name>ZhstApiServlet2</servlet-name>
+	    <url-pattern>/ZhstApiServlet2.servlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+	    <servlet-name>ZhstWebApiServlet1</servlet-name>
+	    <url-pattern>/ZhstWebApiServlet1.servlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+	    <servlet-name>ZhstWebApiServlet2</servlet-name>
+	    <url-pattern>/ZhstWebApiServlet2.servlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+	    <servlet-name>manageServlet</servlet-name>
+	    <url-pattern>/manageServlet.servlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+	    <servlet-name>zhstPhoneSimApi</servlet-name>
+	    <url-pattern>/zhstPhoneSimApi.servlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+	    <servlet-name>FileUploadServlet</servlet-name>
+	    <url-pattern>/FileUploadServlet.servlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+	    <servlet-name>FileUploadServlet2</servlet-name>
+	    <url-pattern>/FileUploadServlet2.servlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+	    <servlet-name>BCPApiServlet</servlet-name>
+	    <url-pattern>/BCPApiServlet.servlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>PingppWebhooksServlet</servlet-name>
+		<url-pattern>/PingppWebhooksServlet</url-pattern>
+	</servlet-mapping>
+	
+	<!-- 
+	<servlet-mapping>
+		<servlet-name>web</servlet-name>
+		<url-pattern>*.action</url-pattern>
+	</servlet-mapping>
+	 -->
+	<session-config>
+		<session-timeout>1440</session-timeout>
+	</session-config>
+	
+	
+	
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+	
+	<security-constraint>
+	    <web-resource-collection>
+	        <web-resource-name>fortune</web-resource-name>
+	      	<url-pattern>/*</url-pattern>
+	        <http-method>PUT</http-method>
+	        <http-method>DELETE</http-method>
+	        <!-- 
+	        <http-method>HEAD</http-method>
+	        <http-method>OPTIONS</http-method>
+	         -->
+	        <http-method>TRACE</http-method>  
+	    </web-resource-collection>
+	    <auth-constraint>
+	    </auth-constraint>
+	</security-constraint>
+</web-app>
