@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ly.mlc.entity.base.BaseMapper">
+  <select id="getNextSequValue" parameterType="String" resultType="Long">
+    select ${value}.nextVal from dual
+  </select>
+  <select id="checkDatabase" resultType="Long">
+  	select 1 from dual
+  </select>
+    <select id="queryCount" parameterType="String" resultType="Long">
+  	select count(*) NCOUNT from (${value}) __count__
+  </select>
+  <select id="queryScalar" parameterType="String" resultType="Object">
+  	${value}
+  </select>
+  <select id="queryResult" parameterType="String" resultType="java.util.HashMap">
+  	${value}
+  </select>
+</mapper>

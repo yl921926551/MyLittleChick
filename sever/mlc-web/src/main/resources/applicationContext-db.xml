@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	                    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	                    http://www.springframework.org/schema/tx
+	                    http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+	                    http://www.springframework.org/schema/jee
+	                    http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
+	                    http://www.springframework.org/schema/context
+	                    http://www.springframework.org/schema/context/spring-context-3.0.xsd
+	                    http://www.springframework.org/schema/aop
+	                    http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+	                    http://www.springframework.org/schema/util 
+      					http://www.springframework.org/schema/util/spring-util-3.0.xsd"
+	default-lazy-init="false">
+
+	<description>Db</description>
+	
+	<bean id="topdeepBeanNameGenerator" class="topdeep.common.util.TopdeepBeanNameGenerator"></bean>
+	
+	<!--zhst datasource start -->
+	<bean id="zhstDataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName">
+			<value>${zhstdb.jndiname}</value>
+		</property>
+	</bean>
+ 	
+	<bean id="zhstVendorProperties"
+		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="properties">
+			<props>
+				<prop key="SQL Server">sqlserver</prop>
+				<prop key="DB2">db2</prop>
+				<prop key="Oracle">oracle</prop>
+				<prop key="MySQL">mysql</prop>
+				<prop key="H2">h2</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="zhstDatabaseIdProvider" class="org.apache.ibatis.mapping.VendorDatabaseIdProvider">
+		<property name="properties" ref="zhstVendorProperties" />
+	</bean>
+	<bean id="zhstSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="zhstDataSource" />
+		<property name="databaseIdProvider" ref="zhstDatabaseIdProvider" />
+		<property name="configLocation" value="classpath:mybatis-config.xml" />
+	</bean>
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="topdeep.zhst.entity.db,topdeep.zhst.entity.base, topdeep.zhst.entity.view" />
+		<property name="sqlSessionFactoryBeanName" value="zhstSqlSessionFactory"></property>
+		<property name="nameGenerator" ref="topdeepBeanNameGenerator"></property>
+	</bean>
+	<bean id="zhstTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="zhstDataSource"></property>
+	</bean>
+	
+	<tx:annotation-driven transaction-manager="zhstTransactionManager" />
+	<!--zhst datasource end -->
+	
+		<!--extdb datasource start -->
+	<bean id="extDataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName">
+			<value>${extdb.jndiname}</value>
+		</property>
+	</bean>
+ 	
+	<bean id="extVendorProperties"
+		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="properties">
+			<props>
+				<prop key="SQL Server">sqlserver</prop>
+				<prop key="DB2">db2</prop>
+				<prop key="Oracle">oracle</prop>
+				<prop key="MySQL">mysql</prop>
+				<prop key="H2">h2</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="extDatabaseIdProvider" class="org.apache.ibatis.mapping.VendorDatabaseIdProvider">
+		<property name="properties" ref="extVendorProperties" />
+	</bean>
+	<bean id="extSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="extDataSource" />
+		<property name="databaseIdProvider" ref="extDatabaseIdProvider" />
+		<property name="configLocation" value="classpath:mybatis-config.xml" />
+	</bean>
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="topdeep.zhst.entity.extdb,topdeep.zhst.entity.base, topdeep.zhst.entity.view" />
+		<property name="sqlSessionFactoryBeanName" value="extSqlSessionFactory"></property>
+		<property name="nameGenerator" ref="topdeepBeanNameGenerator"></property>
+	</bean>
+	<bean id="extTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="extDataSource"></property>
+	</bean>
+	
+	<tx:annotation-driven transaction-manager="extTransactionManager" />
+	<!--ext datasource end -->
+	
+	<!--common datasource start -->
+	<bean id="commonDataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName">
+			<value>${commondb.jndiname}</value>
+		</property>
+	</bean>
+ 	
+	<bean id="commonVendorProperties"
+		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="properties">
+			<props>
+				<prop key="SQL Server">sqlserver</prop>
+				<prop key="DB2">db2</prop>
+				<prop key="Oracle">oracle</prop>
+				<prop key="MySQL">mysql</prop>
+				<prop key="H2">h2</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="commonDatabaseIdProvider" class="org.apache.ibatis.mapping.VendorDatabaseIdProvider">
+		<property name="properties" ref="commonVendorProperties" />
+	</bean>
+	<bean id="commonSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="commonDataSource" />
+		<property name="databaseIdProvider" ref="commonDatabaseIdProvider" />
+		<property name="configLocation" value="classpath:mybatis-config.xml" />
+	</bean>
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="topdeep.common.entity.base, topdeep.common.entity.db, topdeep.common.entity.view" />
+		<property name="sqlSessionFactoryBeanName" value="commonSqlSessionFactory"></property>
+		<property name="nameGenerator" ref="topdeepBeanNameGenerator"></property>
+	</bean>
+	<bean id="commonTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="commonDataSource"></property>
+	</bean>
+	<tx:annotation-driven transaction-manager="commonTransactionManager" />
+	<!--common datasource end -->
+	<!--cms datasource start -->
+    <bean id="cmsDataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName">
+            <value>${cmsdb.jndiname}</value>
+        </property>
+    </bean>
+     
+    <bean id="cmsVendorProperties"
+        class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="properties">
+            <props>
+                <prop key="SQL Server">sqlserver</prop>
+                <prop key="DB2">db2</prop>
+                <prop key="Oracle">oracle</prop>
+                <prop key="MySQL">mysql</prop>
+                <prop key="H2">h2</prop>
+            </props>
+        </property>
+    </bean>
+    <bean id="cmsDatabaseIdProvider" class="org.apache.ibatis.mapping.VendorDatabaseIdProvider">
+        <property name="properties" ref="cmsVendorProperties" />
+    </bean>
+    <bean id="cmsSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="cmsDataSource" />
+        <property name="databaseIdProvider" ref="cmsDatabaseIdProvider" />
+        <property name="configLocation" value="classpath:mybatis-config.xml" />
+    </bean>
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="topdeep.cms.entity.base, topdeep.cms.entity.db, topdeep.cms.mg.entity.view" />
+        <property name="sqlSessionFactoryBeanName" value="cmsSqlSessionFactory"></property>
+        <property name="nameGenerator" ref="topdeepBeanNameGenerator"></property>
+    </bean>
+    <bean id="cmsTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="cmsDataSource"></property>
+	</bean>
+	
+	<tx:annotation-driven transaction-manager="cmsTransactionManager" />
+	<!--cms datasource end -->
+	
+</beans>

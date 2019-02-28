@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	                    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	                    http://www.springframework.org/schema/tx
+	                    http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+	                    http://www.springframework.org/schema/jee
+	                    http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
+	                    http://www.springframework.org/schema/context
+	                    http://www.springframework.org/schema/context/spring-context-3.0.xsd
+	                    http://www.springframework.org/schema/aop
+	                    http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+	                    http://www.springframework.org/schema/util 
+      					http://www.springframework.org/schema/util/spring-util-3.0.xsd"
+	default-lazy-init="false">
+
+	<description>service</description>
+	
+	<bean id="zhstBizParamCheckProxy" class="topdeep.zhst.biz.gateway.impl.ZhstBizParamCheckProxy">
+		<property name="multi_impl" ref="zhstBiz_multi_impl"></property>
+	    <property name="z00_impl" ref="zhstBiz_z00_impl"></property>
+	    <property name="z0a_impl" ref="zhstBiz_z0a_impl"></property>
+	    <property name="z0k_impl" ref="zhstBiz_z0k_impl"></property>
+	    <property name="z0u_impl" ref="zhstBiz_z0u_impl"></property>
+	    <property name="z10_impl" ref="zhstBiz_z10_impl"></property>
+	    <property name="z1a_impl" ref="zhstBiz_z1a_impl"></property>
+	    <property name="z1k_impl" ref="zhstBiz_z1k_impl"></property>
+	    <property name="z20_impl" ref="zhstBiz_z20_impl"></property>
+	    <property name="z30_impl" ref="zhstBiz_z30_impl"></property>
+	</bean>
+	
+	<bean id="zhstBizLogProxy" class="topdeep.zhst.biz.gateway.impl.ZhstBizLogProxy">
+		<property name="multi_impl" ref="zhstBizParamCheckProxy"></property>
+	    <property name="z00_impl" ref="zhstBizParamCheckProxy"></property>
+	    <property name="z0a_impl" ref="zhstBizParamCheckProxy"></property>
+	    <property name="z0k_impl" ref="zhstBizParamCheckProxy"></property>
+	    <property name="z0u_impl" ref="zhstBizParamCheckProxy"></property>
+	    <property name="z10_impl" ref="zhstBizParamCheckProxy"></property>
+	    <property name="z1a_impl" ref="zhstBizParamCheckProxy"></property>
+	    <property name="z1k_impl" ref="zhstBizParamCheckProxy"></property>
+	    <property name="z20_impl" ref="zhstBizParamCheckProxy"></property>
+	    <property name="z30_impl" ref="zhstBizParamCheckProxy"></property>
+	    
+	</bean>
+
+	<bean id="zhstBizProxy" class="cn.ly.mlc.web.biz.MlcGatewayBiz">
+		<property name="multi_impl" ref="zhstBizLogProxy"></property>
+	    <property name="z00_impl" ref="zhstBizLogProxy"></property>
+	    <property name="z0a_impl" ref="zhstBizLogProxy"></property>
+	    <property name="z0k_impl" ref="zhstBizLogProxy"></property>
+	    <property name="z0u_impl" ref="zhstBizLogProxy"></property>
+	    <property name="z10_impl" ref="zhstBizLogProxy"></property>
+	    <property name="z1a_impl" ref="zhstBizLogProxy"></property>
+	    <property name="z1k_impl" ref="zhstBizLogProxy"></property>
+	    <property name="z20_impl" ref="zhstBizLogProxy"></property>
+	    <property name="z30_impl" ref="zhstBizLogProxy"></property>
+	    
+	</bean>
+
+	<bean id="zhstServiceApi" class="topdeep.zhst.biz.gateway.impl.ServiceApiImpl"></bean>
+	
+	<bean id="manageBizImpl" class="cn.ly.mlc.web.biz.manage.ManageBizImpl"></bean>
+	<bean id="manageBiz" class="topdeep.zhst.biz.manage.impl.ManageBizParamCheckProxy">
+		<property name="biz_impl" ref="manageBizImpl"></property>
+	</bean>
+
+</beans>
